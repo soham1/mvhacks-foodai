@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/foodai");
+//mongoose.Promise = global.Promise;
+//mongoose.connect("mongodb://localhost/foodai");
 
 var index = require('./routes/index');
 var app = express();
