@@ -1,8 +1,44 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.leaderboard {
+  margin-left: 20px;
 }
 
-a {
-  color: #00B7FF;
+.count {
+  font-size: 20px;
+}
+
+.food-num {
+  font-size: 15px;
+}    
+
+.food-name {
+  line-height: 50px;
+} 
+
+.logo {
+  height: 63px;
+  margin-left: 34px;
+}
+
+.navbar {
+  margin-bottom: 30px;
+}
+
+.graphBtn {
+  margin-right: 30px;
+}
+
+.modal {
+  min-height: 550px;
+}
+
+.actionBtn {
+  margin-right: 30px !important;
+}
+
+.progress {
+  margin: 0px !important;
+}
+
+.poll {
+  margin-right: 34px;
 }

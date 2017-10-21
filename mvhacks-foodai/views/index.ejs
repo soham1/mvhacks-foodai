@@ -1,122 +1,222 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light-blue accent-1">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Starter Template - Materialize</title>
-
+  <title>Food Raccoon</title>
+  
+  <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AD4AAAAiAAAAIgAAACIAAAAiAAAAI/AAACAQAAAgEAAAIBAAACPwAAAiAAAAI/gAACAIAAAgCAAAIAgAAD/4AADB/wAAwf8AAMH/AADB/wAAwf8AAMAPAADADwAAwA8AAMAPAADADwAAwf8AAMAHAADABwAAwAcAAMAHAADABwAA" rel="icon" type="image/x-icon" />
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="/node_modules/materialize-css/dist/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="stylesheets/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h1 class="header center orange-text">Starter Template</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+  <div id="app">
+      <div class="progress orange lighten-4 navProgressBar">
+        <div class="indeterminate orange lighten-2"></div>
       </div>
-      <div class="row center">
-        <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-      </div>
-      <br><br>
-
-    </div>
-  </div>
-
-
-  <div class="container">
-    <div class="section">
-
-      <!--   Icon Section   -->
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Speeds up development</h5>
-
-            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+      <!--<nav class="white navbar" role="navigation">-->
+      <!--  <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo center"><img class="logo" src="https://i.imgur.com/pRi7lTT.png"></a></div>-->
+      <!--</nav>-->
+      
+      <nav class="top-nav white navbar">
+          <div class="nav-wrapper">
+            <a class="page-title" href="/">
+              <img class="logo" src="https://i.imgur.com/pRi7lTT.png">
+            </a>
+            <ul class="right hide-on-med-and-down">
+              <li>
+                <a class="poll" href="https://goo.gl/forms/0HhjtvXNyBDF1Rl72" target="_blank">
+                  <i class="material-icons black-text right-align">poll</i>
+                </a>
+              </li>
+            </ul>
+          </div>
+      </nav>
+      
+      <div>
+        <div class="row">
+          <div class="col s4">
+            <div class="left-align leaderboard">
+              <div class="row">
+                <div class="col s12">
+                  <div class="card-panel orange lighten-2">
+                    <h4 class="left-align white-text">Most Wasted Food</h4>
+                    <div class="collection" v-for="(food, index) in foods">
+                      <a class="collection-item black-text">
+                        <span class="badge black-text tooltipped" data-position="top" data-delay="50" data-tooltip="Number of Images"><b>{{ food[1]}}</b></span>
+                        <b>{{ food[0] }}</b>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s4">
+            <div class="row">
+              <div class="col s12">
+                <div class="card-panel green lighten-2">
+                  <h4 class="left-align white-text">Best Sentiment Schools</h4>
+                  <ul class="collection" v-for="(goodSchool, index) in goodSchools">
+                    <li class="collection-item">
+                      <div>
+                        <b>{{goodSchools[index]}}</b>
+                        <a href="http://www.topix.com/forum/city/dunlap-tn/TVJKIRS0HPOJKC64M/school-food" target="_blank" class="secondary-content tooltipped" data-position="top" data-delay="50" data-tooltip="Go to Forum">
+                          <i class="material-icons black-text">forum</i>
+                        </a>
+                        <a :href="'#goodModal' + index" class="secondary-content modal-trigger tooltipped graphBtn" data-position="top" data-delay="50" data-tooltip="Open Sentiment Chart">
+                          <i class="material-icons black-text">show_chart</i>
+                        </a>
+                      </div>
+                    </li>
+                    <div :id="'goodModal' + index" class="modal">
+                      <div class="modal-content">
+                        <h2 class="center-align">{{goodSchools[index]}}</h2>
+                        <canvas :id="'goodGraph' + index"></canvas>
+                      </div>
+                      <div class="modal-footer">
+                        <a href="http://www.topix.com/forum/city/dunlap-tn/TVJKIRS0HPOJKC64M/school-food" target="_blank" class="modal-action waves-effect waves-gray btn actionBtn green lighten-2">Go To Forum</a>
+                      </div>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s4">
+            <div class="row">
+              <div class="col s12">
+                <div class="card-panel red accent-1">
+                  <h4 class="white-text left-align">Worst Sentiment Schools</h4>
+                  <ul class="collection" v-for="(badSchool, index) in badSchools">
+                    <li class="collection-item">
+                      <div>
+                        <b>{{badSchools[index]}}</b>
+                        <a href="http://www.topix.com/forum/city/dunlap-tn/TVJKIRS0HPOJKC64M/school-food" target="_blank" class="secondary-content tooltipped" data-position="top" data-delay="50" data-tooltip="Go to Forum">
+                          <i class="material-icons black-text">forum</i>
+                        </a>
+                        <a :href="'#badModal' + index" class="secondary-content modal-trigger tooltipped graphBtn" data-position="top" data-delay="50" data-tooltip="Open Sentiment Chart">
+                          <i class="material-icons black-text">show_chart</i>
+                        </a>
+                      </div>
+                    </li>
+                    <div :id="'badModal' + index" class="modal">
+                      <div class="modal-content">
+                        <h2 class="center-align">{{badSchools[index]}}</h2>
+                        <canvas :id="'badGraph' + index"></canvas>
+                      </div>
+                      <div class="modal-footer">
+                        <a href="http://www.topix.com/forum/city/dunlap-tn/TVJKIRS0HPOJKC64M/school-food" target="_blank" class="modal-action waves-effect waves-gray btn actionBtn red accent-1">Go To Forum</a>
+                      </div>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">User Experience Focused</h5>
-
-            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Easy to work with</h5>
-
-            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
-          </div>
-        </div>
       </div>
 
+
+      <!--  Scripts-->
+      <script src="https://code.jquery.com/jquery-2.1.1.min.js" integrity="sha256-h0cGsrExGgcZtSZ/fRz4AwV+Nn6Urh/3v3jFRQ0w9dQ=" crossorigin="anonymous"></script>
+      <script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
+      <script src="/node_modules/vue/dist/vue.min.js"></script>
+      <script src="/node_modules/chart.js/dist/Chart.min.js"></script>
+      <script>
+        setTimeout(function(){ 
+          
+          var app = new Vue({
+          el: '#app',
+          data: {
+            foods: [['Bread', 15], ['Milk', 12], ['Potatoes', 11], ['Cheese', '9'], ['Apples', '9'], ['Celery', '7']],
+            goodSchools: ['American High School', 'Warwick Elementary School', 'Thornton Junior High School', 'Laurel Hill School', 'Griffith Middle School', 'Robert E. Lee High School', 'Vang Pao Elementary School'],
+            badSchools: ['Ontario High School', 'St. John Bosco High School', 'Saranac High School', 'Clinton High School', 'Sandusky High School', 'Belmont High School', 'Colon High School'],
+            goodSentiments: [[20, 15, 40, 46, 49, 55, 70, 83, 89, 87, 90, 95]],
+            badSentiments: [[10, 12, 23, 27, 30, 34, 37, 38, 43, 44, 52, 57]]
+          },
+          created(){
+            for (var i = 0; i < 6; i++) {
+            this.goodSentiments.push(Array.from({length: 12}, () => (Math.floor(Math.random() * 91) + 10)));
+            }
+            for (var z = 0; z < 6; z++) {
+              this.badSentiments.push(Array.from({length: 12}, () => (Math.floor(Math.random() * 91) + 10)));
+            }
+          }, 
+          mounted(){
+            console.log("UPDATED", this.goodSentiments);
+            $('.modal').modal();
+            $('.tooltipped').tooltip({delay: 50});
+            $('.navProgressBar').hide();
+            for (var d = 0; d < 7; d++) {
+              var ctx = document.getElementById('goodGraph' + d).getContext('2d');
+              var sentimentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: [ "January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December" ],
+                  datasets: [{
+                    label: 'Sentiment',
+                    data: this.goodSentiments[d],
+                    backgroundColor: "#a5d6a7",
+                    borderColor: "#4caf50"
+                  }]
+                },
+                options: {
+                  scales: {
+                    xAxes: [{
+                      gridLines: {
+                        drawOnChartArea: false
+                      }
+                    }],
+                    yAxes: [{
+                      gridLines: {
+                        drawOnChartArea: false
+                      }
+                    }]
+                  }
+                }
+              });
+            }
+            for (var v = 0; v < 7; v++) {
+              var ctx = document.getElementById('badGraph' + v).getContext('2d');
+              var sentimentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: [ "January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December" ],
+                  datasets: [{
+                    label: 'Sentiment',
+                    data: this.badSentiments[v],
+                    backgroundColor: "#ef9a9a",
+                    borderColor: "#f44336"
+                  }]
+                },
+                options: {
+                  scales: {
+                    xAxes: [{
+                      gridLines: {
+                        drawOnChartArea: false
+                      }
+                    }],
+                    yAxes: [{
+                      gridLines: {
+                        drawOnChartArea: false
+                      }
+                    }]
+                  }
+                }
+              });
+            }
+          }
+        });
+          
+        }, 500);
+        
+      </script>
     </div>
-    <br><br>
-  </div>
-
-  <footer class="page-footer orange">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-copyright">
-      <div class="container">
-      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-      </div>
-    </div>
-  </footer>
-
-
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js" integrity="sha256-h0cGsrExGgcZtSZ/fRz4AwV+Nn6Urh/3v3jFRQ0w9dQ=" crossorigin="anonymous"></script>
-  <script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
-
   </body>
 </html>
