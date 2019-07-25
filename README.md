@@ -19,7 +19,7 @@ Uses Clarifai's Food Vision API to find all the foods in every trash can picture
 * Microsoft Cognitive Services
 * Topix Forum API
 
-## Submission
+## Hackathon Submission
 
 https://devpost.com/software/food-raccoon
 
